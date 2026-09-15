@@ -1,0 +1,8 @@
+symbol,qty,price,settle_date,note
+AAPL,100,150.00,2026-07-24,
+MSFT,50,300.00,2026-07-25,
+KO,100,62.00,2026-07-24,
+SAP,200,108.00,2026-07-24,
+GOOG,150,140.00,2026-07-24,
+TSLA,10000,250.00,2026-07-24,
+ORCL,150,60.00,2026-07-24,3-for-2 forward stock split per press release; ratio not yet loaded to reference table
