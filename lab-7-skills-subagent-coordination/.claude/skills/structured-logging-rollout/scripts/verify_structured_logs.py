@@ -28,7 +28,7 @@ from agentic_framing.logging_utils import capture_log_events  # noqa: E402
 
 
 def _check_fees() -> list[str]:
-    from labs.lab1.fees import annual_advisory_fee
+    from fees import annual_advisory_fee
 
     problems: list[str] = []
     with capture_log_events("fees") as events:
@@ -43,7 +43,7 @@ def _check_fees() -> list[str]:
 
 
 def _check_reconcile() -> list[str]:
-    from labs.lab4.reconcile import reconcile_positions
+    from reconcile import reconcile_positions
 
     problems: list[str] = []
     book = [{"symbol": "KO", "qty": 100, "price": 61.231, "settle_date": "2024-01-10"}]
@@ -77,7 +77,7 @@ def _check_reconcile() -> list[str]:
 def _check_drift() -> list[str]:
     from datetime import datetime, timedelta
 
-    from labs.lab3.drift import DriftReading, check_drift_alert
+    from drift import DriftReading, check_drift_alert
 
     problems: list[str] = []
     readings = [

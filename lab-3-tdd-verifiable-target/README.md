@@ -36,10 +36,10 @@ before alerting). A brief spike doesn't fire; a sustained breach does.
 
 1. A spike lasting less than `min_duration_minutes` does NOT alert.
 2. A breach lasting at least `min_duration_minutes` DOES alert.
-3. All 4 tests in `labs/lab3/test_drift.py` pass, including the one that starts out failing.
+3. All 4 tests in `test_drift.py` pass, including the one that starts out failing.
 4. The full suite (`pytest`) passes with no regressions.
 
-> **Verifiable target (Agentic Mindset — Verification ingredient):** `labs/lab3/test_drift.py`
+> **Verifiable target (Agentic Mindset — Verification ingredient):** `test_drift.py`
 > One test in it fails on purpose before you start. That failing test *is* the spec; Plan
 > mode below exists to propose a change against it, not against vibes.
 
@@ -54,8 +54,8 @@ before alerting). A brief spike doesn't fire; a sustained breach does.
 
 | Already built | Your turn |
 |---|---|
-| `labs/lab3/drift.py` — basic drift detection (no hysteresis) | Add hysteresis/min-duration behavior |
-| `labs/lab3/test_drift.py` — 4 tests, **1 failing** (the verifiable target) | Make it pass using Plan mode |
+| `drift.py` — basic drift detection (no hysteresis) | Add hysteresis/min-duration behavior |
+| `test_drift.py` — 4 tests, **1 failing** (the verifiable target) | Make it pass using Plan mode |
 | The drift scorer keywords from earlier | Use them to frame and verify your work |
 
 ---
@@ -65,7 +65,7 @@ before alerting). A brief spike doesn't fire; a sustained breach does.
 Run the tests to see the current state:
 
 ```bash
-python3 -m pytest labs/lab3/test_drift.py -v
+python3 -m pytest test_drift.py -v
 ```
 
 You should see:
@@ -86,7 +86,7 @@ This is your **verifiable target**. Don't implement until you understand it.
 
 Open Claude Code and enable **Plan mode** (the toggle in the panel, or type `/plan`).
 
-Give Claude the task as a proper frame that ensures that false positives in `labs/lab3/drift.py` are fixed using hysteresis such that only alert if the breach lasts at least `min_duration_minutes`
+Give Claude the task as a proper frame that ensures that false positives in `drift.py` are fixed using hysteresis such that only alert if the breach lasts at least `min_duration_minutes`
 
 Review the plan Claude proposes. It should:
 1. Add a `min_duration_minutes` parameter to the alert function
@@ -108,7 +108,7 @@ Once you approve, Claude executes the plan. Watch it:
 ## Part 4: Verify — run the tests
 
 ```bash
-python3 -m pytest labs/lab3/test_drift.py -v
+python3 -m pytest test_drift.py -v
 ```
 
 All 4 tests should pass. If not, the verifiable target tells you exactly what's wrong. Fix it and re-run.
@@ -174,7 +174,7 @@ point — you write the spec this time.
 
 ### Step 1 — Red: write the tests yourself
 
-Add new test functions to `labs/lab3/test_drift.py`. Don't touch the 4 tests already there —
+Add new test functions to `test_drift.py`. Don't touch the 4 tests already there —
 they lock in Part 1-5's hysteresis behavior and must keep passing. At minimum, write:
 
 - A brief spike **above** `critical_percent` → alerts immediately, even though it hasn't
@@ -186,7 +186,7 @@ they lock in Part 1-5's hysteresis behavior and must keep passing. At minimum, w
 Run them:
 
 ```bash
-python3 -m pytest labs/lab3/test_drift.py -v
+python3 -m pytest test_drift.py -v
 ```
 
 Confirm your new tests fail — and fail for the *right* reason (missing behavior, not a typo
@@ -197,7 +197,7 @@ isn't checking what you think it's checking.
 
 Back in Plan mode, frame it for Claude:
 
-> *"Add a `critical_percent` parameter to `check_drift_alert` in `labs/lab3/drift.py`:
+> *"Add a `critical_percent` parameter to `check_drift_alert` in `drift.py`:
 > breaches above `critical_percent` alert immediately, bypassing `min_duration_minutes`.
 > Breaches between `threshold_percent` and `critical_percent` keep the existing hysteresis
 > behavior. My new tests in `test_drift.py` are the acceptance criteria — don't edit them.
@@ -210,7 +210,7 @@ Approve the plan, let Claude execute it.
 ### Step 4 — Verify
 
 ```bash
-python3 -m pytest labs/lab3/test_drift.py -v
+python3 -m pytest test_drift.py -v
 ```
 
 Your new tests pass, and the original 4 still pass.

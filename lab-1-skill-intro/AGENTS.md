@@ -26,13 +26,13 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
 - **Domain is Wealth Management** — advisory fees, AUM tiers, breakpoint calculation.
   Keep examples in that world.
 - **Files:**
-  - `labs/lab1/fees.py` — the module you'll edit.
-  - `labs/lab1/test_fees.py` — the verifiable target.
+  - `fees.py` — the module you'll edit.
+  - `test_fees.py` — the verifiable target.
   - `.claude/skills/scoped-bugfix-flow/SKILL.md` — the reusable generic bug-fix flow.
   - `backlog/WM-101-fee-tier-bug.md` — the ticket this lab is based on.
 - **Verify with `pytest`, not by eye:**
   ```bash
-  python3 -m pytest labs/lab1/test_fees.py -v   # this lab's tests
+  python3 -m pytest test_fees.py -v   # this lab's tests
   python3 -m pytest -v                          # full suite, no regressions
   ```
 - **Guardrails:**

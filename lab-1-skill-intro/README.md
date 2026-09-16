@@ -30,11 +30,11 @@ applies a single tier's rate to the entire AUM.
 1. `annual_advisory_fee` returns the progressive/marginal fee at, just above, and above each
    breakpoint (matching the documented example: first $1,000,000 at 1.00%, next $4,000,000 at
    0.80%, remainder at 0.60%).
-2. `labs/lab1/test_fees.py` passes in full, with no tests edited to fit the bug.
+2. `test_fees.py` passes in full, with no tests edited to fit the bug.
 3. The full suite (`pytest`) passes with no regressions elsewhere.
 4. Negative AUM still raises `ValueError`.
 
-> **Verifiable target (Agentic Mindset — Verification ingredient):** `labs/lab1/test_fees.py`
+> **Verifiable target (Agentic Mindset — Verification ingredient):** `test_fees.py`
 > — this is what "done" means before you hand anything back. Delegating an outcome only works
 > if the agent can check it against something concrete, not vibes.
 
@@ -104,7 +104,7 @@ Keep implementation scoped to fee logic and supporting tests.
 Suggested execution checks:
 
 ```bash
-python3 -m pytest labs/lab1/test_fees.py
+python3 -m pytest test_fees.py
 python3 -m pytest
 ```
 
@@ -115,7 +115,7 @@ python3 -m pytest
 Hand back:
 
 1. The final task frame text.
-2. Test evidence (`labs/lab1/test_fees.py` and full suite result).
+2. Test evidence (`test_fees.py` and full suite result).
 3. Short diff summary (what changed and why).
 4. Any assumptions or escalations you had to make.
 

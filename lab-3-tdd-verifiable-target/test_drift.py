@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from labs.lab3.drift import DriftReading, check_drift_alert
+from drift import DriftReading, check_drift_alert
 
 
 def _reading(minutes_ago: int, drift_percent: float) -> DriftReading:

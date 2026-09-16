@@ -25,10 +25,10 @@ stable, it should become automation.
 
 ## Scope for Lab 2
 
-This lab is fee-domain only and stays inside `labs/lab2/`.
+This lab is fee-domain only and stays inside this folder.
 
-- Primary code target: `labs/lab2/fee_rollout.py`
-- Primary verification target: `labs/lab2/test_fee_rollout.py`
+- Primary code target: `fee_rollout.py`
+- Primary verification target: `test_fee_rollout.py`
 - Starter generic Skill: `.claude/skills/scoped-bugfix-flow/SKILL.md`
 
 ## Scenario
@@ -54,7 +54,7 @@ Tests are pre-seeded and intentionally failing at the start.
 
 1. Pass 1: you use `scoped-bugfix-flow` to fix the quarterly target.
 2. Pass 2: you author and invoke your own fee-specific Skill and fix the monthly target.
-3. `pytest labs/lab2/test_fee_rollout.py -v` passes.
+3. `pytest test_fee_rollout.py -v` passes.
 4. Full `pytest` passes.
 5. You provide a pass-by-pass deliverable with evidence.
 
@@ -67,7 +67,7 @@ Tests are pre-seeded and intentionally failing at the start.
 Run tests before edits:
 
 ```bash
-python3 -m pytest labs/lab2/test_fee_rollout.py -v
+python3 -m pytest test_fee_rollout.py -v
 ```
 
 You should see failures. That failing state is the verifiable target.
@@ -79,14 +79,14 @@ Use the existing generic Skill to fix **quarterly** behavior only.
 Run focused tests:
 
 ```bash
-python3 -m pytest labs/lab2/test_fee_rollout.py -k quarterly -v
+python3 -m pytest test_fee_rollout.py -k quarterly -v
 ```
 
 Prompt template:
 
 > "Use skill `scoped-bugfix-flow`. Outcome: fix progressive-tier behavior for
-> `quarterly_advisory_fee` in `labs/lab2/fee_rollout.py`. Scope: edit only that file.
-> Verification: run `pytest labs/lab2/test_fee_rollout.py -k quarterly -v`.
+> `quarterly_advisory_fee` in `fee_rollout.py`. Scope: edit only that file.
+> Verification: run `pytest test_fee_rollout.py -k quarterly -v`.
 > Guardrails: do not edit tests. Deliverable: scope confirmation + diff summary + evidence."
 
 ### Pass 2 - Specialized flow on second analogous target (20-25 min)
@@ -105,21 +105,21 @@ Your Skill must add domain rules beyond generic flow:
 Run focused tests:
 
 ```bash
-python3 -m pytest labs/lab2/test_fee_rollout.py -k monthly -v
+python3 -m pytest test_fee_rollout.py -k monthly -v
 ```
 
 Prompt template:
 
 > "Use skill `<your-fee-standardization-skill>`. Outcome: apply the same progressive-tier
-> business rules to `monthly_advisory_fee` in `labs/lab2/fee_rollout.py`.
-> Verification: run `pytest labs/lab2/test_fee_rollout.py -k monthly -v`, then
-> `pytest labs/lab2/test_fee_rollout.py -v`, then full `pytest`.
+> business rules to `monthly_advisory_fee` in `fee_rollout.py`.
+> Verification: run `pytest test_fee_rollout.py -k monthly -v`, then
+> `pytest test_fee_rollout.py -v`, then full `pytest`.
 > Guardrails: do not edit tests, do not expand scope."
 
 ### Final verification (5-10 min)
 
 ```bash
-python3 -m pytest labs/lab2/test_fee_rollout.py -v
+python3 -m pytest test_fee_rollout.py -v
 ```
 
 ---
@@ -141,7 +141,7 @@ Submit these items in order:
   - baseline failing state
   - Pass 1 focused results (`-k quarterly`)
   - Pass 2 focused results (`-k monthly`)
-  - final `labs/lab2/test_fee_rollout.py` result
+  - final `test_fee_rollout.py` result
   - final full `pytest` result
 5. Comparison:
   - what the specialized fee Skill added beyond `scoped-bugfix-flow`

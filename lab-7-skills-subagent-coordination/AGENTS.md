@@ -29,10 +29,9 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
 - **Files:**
   - `agentic_framing/logging_utils.py` — the shared `StructuredLogger` / `get_logger()` /
     `capture_log_events()` test helper. Already built — don't edit it.
-  - `labs/lab1/fees.py`, `labs/lab3/drift.py`, `labs/lab4/reconcile.py` — the three modules
-    you'll thread logging through. Their domain logic (fee tiers, reconciliation strategies,
-    drift hysteresis) is carried forward from earlier labs and is out of scope here, whether or
-    not it's fully fixed yet.
+  - `fees.py`, `drift.py`, `reconcile.py` — the three modules you'll thread logging through.
+    Their domain logic (fee tiers, reconciliation strategies, drift hysteresis) is carried
+    forward from earlier labs and is out of scope here, whether or not it's fully fixed yet.
   - `test_logging.py` — the verifiable target. All tests fail on purpose until logging is
     threaded through; that failing state *is* the spec.
   - `backlog/WM-109-login-audit-log.md` — the ticket this lab is based on.

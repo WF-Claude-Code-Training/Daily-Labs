@@ -35,10 +35,10 @@ taking an `event` name and arbitrary keyword fields. Every call emits one JSON l
 
 | Module | `domain` | Event | Fields | When |
 |---|---|---|---|---|
-| `labs/lab1/fees.py` | `fees` | `fee_calculated` | `aum`, `fee` | Every call to `annual_advisory_fee` |
-| `labs/lab4/reconcile.py` | `reconcile` | `position_resolved` | `symbol`, `strategy` | A mismatch a known strategy explained |
-| `labs/lab4/reconcile.py` | `reconcile` | `position_escalated` | `symbol`, `risk_level`, `reason` | A mismatch escalated (genuine break or dollar-risk override) |
-| `labs/lab3/drift.py` | `drift` | `drift_alert_fired` | `portfolio_id`, `drift_percent` | `check_drift_alert` returns an alert (not `None`) |
+| `fees.py` | `fees` | `fee_calculated` | `aum`, `fee` | Every call to `annual_advisory_fee` |
+| `reconcile.py` | `reconcile` | `position_resolved` | `symbol`, `strategy` | A mismatch a known strategy explained |
+| `reconcile.py` | `reconcile` | `position_escalated` | `symbol`, `risk_level`, `reason` | A mismatch escalated (genuine break or dollar-risk override) |
+| `drift.py` | `drift` | `drift_alert_fired` | `portfolio_id`, `drift_percent` | `check_drift_alert` returns an alert (not `None`) |
 
 ## What NOT to log
 
