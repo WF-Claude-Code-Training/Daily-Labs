@@ -2,7 +2,7 @@
 
 import pytest
 
-from labs.lab1.fees import annual_advisory_fee
+from fees import annual_advisory_fee
 
 
 def test_fee_at_first_breakpoint_is_exact():

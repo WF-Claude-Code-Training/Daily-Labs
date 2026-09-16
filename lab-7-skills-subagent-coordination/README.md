@@ -42,12 +42,12 @@ outcomes (an exact match, drift that stays within threshold) must NOT add noise 
 
 ### Definition of done
 
-1. `annual_advisory_fee` (`labs/lab1/fees.py`) logs a `fee_calculated` event (`aum`, `fee`) on
+1. `annual_advisory_fee` (`fees.py`) logs a `fee_calculated` event (`aum`, `fee`) on
    every call.
-2. `reconcile_positions` (`labs/lab4/reconcile.py`) logs `position_resolved` (`symbol`,
+2. `reconcile_positions` (`reconcile.py`) logs `position_resolved` (`symbol`,
    `strategy`) for every explained mismatch, and `position_escalated` (`symbol`, `risk_level`,
    `reason`) for every escalation — but nothing for an exact `MATCHED` position.
-3. `check_drift_alert` (`labs/lab3/drift.py`) logs `drift_alert_fired` (`portfolio_id`,
+3. `check_drift_alert` (`drift.py`) logs `drift_alert_fired` (`portfolio_id`,
    `drift_percent`) whenever it returns an alert — but nothing when it returns `None`.
 4. The `logging-reviewer` subagent has reviewed all three changes and returned **APPROVED**.
 5. `test_logging.py` passes in full, and the full suite (`pytest`) has no regressions.
@@ -63,7 +63,7 @@ outcomes (an exact match, drift that stays within threshold) must NOT add noise 
 | Already built | Your turn |
 |---|---|
 | `agentic_framing/logging_utils.py` — `get_logger()`, `StructuredLogger`, and a `capture_log_events()` test helper. | Thread it through the three target modules — nothing here needs editing. |
-| `labs/lab1/fees.py`, `labs/lab3/drift.py`, `labs/lab4/reconcile.py` — working domain logic carried forward from earlier labs | Add one `get_logger("...")` + the log calls named in Definition of done, above |
+| `fees.py`, `drift.py`, `reconcile.py` — working domain logic carried forward from earlier labs | Add one `get_logger("...")` + the log calls named in Definition of done, above |
 | `.claude/skills/structured-logging-rollout/` — a **multi-file project Skill**: `SKILL.md` (workflow), `reference.md` (field-naming conventions + worked example, loaded on demand), `scripts/verify_structured_logs.py` (a deterministic checker run via Bash) | Use it — read `reference.md` once before writing your first log call |
 | `.claude/agents/logging-reviewer.md` — a pre-built, read-only review subagent the Skill delegates to | Nothing to build — just don't skip the delegation step |
 | `test_logging.py` — the verifiable target, currently failing | Make it pass without changing what any of the three functions returns |
@@ -103,7 +103,7 @@ be read into the conversation, only its pass/fail output does.
 Ask for it explicitly — Skill selection isn't guaranteed to happen implicitly:
 
 > *"Use skill `structured-logging-rollout`. Outcome: thread `agentic_framing.logging_utils`
-> through `labs/lab1/fees.py`, `labs/lab4/reconcile.py`, and `labs/lab3/drift.py` per WM-109.
+> through `fees.py`, `reconcile.py`, and `drift.py` per WM-109.
 > Scope: only those three files (plus the necessary import/module-level logger in each) —
 > don't change what any function returns or how it decides. Verification: delegate to the
 > `logging-reviewer` subagent, then run
@@ -147,8 +147,8 @@ combines both moves deliberately, and the combination is not arbitrary:
 
 Once all three files are edited, prompt explicitly if the Skill hasn't already:
 
-> *"Have the logging-reviewer subagent review the logging changes in `labs/lab1/fees.py`,
-> `labs/lab4/reconcile.py`, and `labs/lab3/drift.py`."*
+> *"Have the logging-reviewer subagent review the logging changes in `fees.py`,
+> `reconcile.py`, and `drift.py`."*
 
 Read its report. If it comes back **CHANGES NEEDED**, fix the flagged file(s) yourself, then
 re-run the tests and ask for review again. Once it's **APPROVED**, move on to Part 4.

@@ -14,9 +14,9 @@ logging work specifically. `stock_split_adjustment` in `reconcile.py` is still s
 from datetime import datetime, timedelta
 
 from agentic_framing.logging_utils import capture_log_events
-from labs.lab1.fees import annual_advisory_fee
-from labs.lab3.drift import DriftReading, check_drift_alert
-from labs.lab4.reconcile import reconcile_positions
+from drift import DriftReading, check_drift_alert
+from fees import annual_advisory_fee
+from reconcile import reconcile_positions
 
 
 # ── Fee calculation ──────────────────────────────────────────────────────────

@@ -31,7 +31,7 @@ advisor actually needs to see — a real quantity gap, or a position missing on 
 The ticket also has a vague outcome, no constraints, and "prints the mismatches" is *output*,
 not *verification*. **The fix:** reframe it — reconcile book vs custodian, resolve what a known
 normalization rule explains and escalate everything else, read-only against both source files,
-verified by `labs/lab4/test_reconcile.py` — so the result never silently drops a mismatch and
+verified by `test_reconcile.py` — so the result never silently drops a mismatch and
 never guesses.
 
 ### User story

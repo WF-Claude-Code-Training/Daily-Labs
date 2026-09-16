@@ -26,15 +26,15 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
 - **Domain is Wealth Management** — portfolios, advisory fees, AUM tiers, billing cadence.
   Keep examples in that world.
 - **Files:**
-  - `labs/lab2/fee_rollout.py` — the module you'll edit. Both methods start with cliff-rate
+  - `fee_rollout.py` — the module you'll edit. Both methods start with cliff-rate
     behavior intentionally, so the failing baseline is real.
-  - `labs/lab2/test_fee_rollout.py` — the verifiable target.
+  - `test_fee_rollout.py` — the verifiable target.
   - `.claude/skills/scoped-bugfix-flow/SKILL.md` — the reusable generic bug-fix flow to use in
     Pass 1.
   - `backlog/WM-202-fee-rollout.md` — the ticket this lab is based on.
 - **Verify with `pytest`, not by eye:**
   ```bash
-  python3 -m pytest labs/lab2/test_fee_rollout.py -v   # this lab's tests
+  python3 -m pytest test_fee_rollout.py -v   # this lab's tests
   python3 -m pytest -v                                 # full suite, no regressions
   ```
 - **Guardrails:**

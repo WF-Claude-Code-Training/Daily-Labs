@@ -25,15 +25,15 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
 - **Domain is Wealth Management** — portfolios, drift from target allocation, advisor
   alerting. Keep examples in that world.
 - **Files:**
-  - `labs/lab3/drift.py` — the module you'll edit (starter code, no hysteresis yet).
-  - `labs/lab3/test_drift.py` — the verifiable target. One test fails on purpose; that
+  - `drift.py` — the module you'll edit (starter code, no hysteresis yet).
+  - `test_drift.py` — the verifiable target. One test fails on purpose; that
     failing test *is* the spec.
   - `backlog/WM-110-drift-alert.md` — the ticket this lab is based on.
 - **Use Plan mode** before editing `drift.py`. Propose a plan, get it reviewed/approved, then
   implement — see README.md Parts 2-3.
 - **Verify with `pytest`, not by eye:**
   ```bash
-  python3 -m pytest labs/lab3/test_drift.py -v   # this lab's tests
+  python3 -m pytest test_drift.py -v   # this lab's tests
   python3 -m pytest -v                            # full suite, no regressions
   ```
 - **Guardrails:**

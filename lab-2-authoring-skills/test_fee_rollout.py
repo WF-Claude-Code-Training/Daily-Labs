@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import pytest
 
-from labs.lab2.fee_rollout import monthly_advisory_fee, quarterly_advisory_fee
+from fee_rollout import monthly_advisory_fee, quarterly_advisory_fee
 
 
 def _expected_annual_progressive_fee(aum: int) -> float:
