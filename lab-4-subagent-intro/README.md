@@ -1,10 +1,9 @@
 # Day 1 · Lab 4 — Implement, Then Get an Independent Review
 
 > **Standalone package.** This folder is a self-contained copy of Lab 4 from a larger Claude
-> Code training course — it needs no access to the rest of the course repo. Setup:
+> Code training course. Open this folder
+> directly as your VS Code / editor workspace root, then set up:
 > ```bash
-> cd lab4-standalone
-> python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 > pip install -r requirements.txt
 > ```
 > All commands below assume you're running them from this folder.
@@ -31,7 +30,7 @@ advisor actually needs to see — a real quantity gap, or a position missing on 
 The ticket also has a vague outcome, no constraints, and "prints the mismatches" is *output*,
 not *verification*. **The fix:** reframe it — reconcile book vs custodian, resolve what a known
 normalization rule explains and escalate everything else, read-only against both source files,
-verified by `labs/lab4/test_reconcile.py` — so the result never silently drops a mismatch and
+verified by `test_reconcile.py` — so the result never silently drops a mismatch and
 never guesses.
 
 ### User story
@@ -151,15 +150,19 @@ this done, get it reviewed — by something other than the conversation that jus
 
 ### Why a subagent, not just asking Claude Code to check its own diff
 
-A **Skill** (you'll build one in a later lab) runs inline, in your main session, sharing its
+A **Skill** runs inline, in your main session, sharing its
 context and history — the cheap, default choice for a reusable workflow. A **subagent**
-(`.claude/agents/*.md`) runs in its own isolated context, with its own enforced tool list and
-its own model, independent of whatever the main session is doing. That isolation is the entire
-point here:
+(`.claude/agents/*.md`) runs in its own context — its own history, its own enforced tool list,
+its own model — separate from your main session, and **disposable**: once it reports back, that
+context is gone. That isolation is the entire point here:
 
 - **Independence.** The reviewer never saw the reasoning that produced the code — it can't be
   talked into rubber-stamping its own blind spots the way a conversation reviewing its own work
   can be.
+- **A disposable context.** Reading `reconcile.py` in full, working through the five-point
+  checklist below — all of that happens in a context window that's thrown away once the
+  subagent reports back. Only the verdict lands in your conversation, not the reasoning it took
+  to get there, so your main session's context budget stays exactly as it was before you asked.
 - **Enforced restriction, not a suggestion.** `strategy-reviewer`'s tools are locked to
   `Read, Grep, Glob` — no `Edit`, no `Bash`. It is *not able* to patch the code itself, no matter
   what permission mode your main session is running in.
