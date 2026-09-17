@@ -5,6 +5,9 @@
 > dependencies to install (stdlib-only, Python 3.10+). All commands below assume you're running
 > them from this folder.
 
+> **Environment note.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+> `python` in every command below.
+
 > **Recap.** In Lab 4 (an earlier lab in this course, not included in this package) you used a
 > subagent someone else had already built for you: `strategy-reviewer`, a **project-scoped**
 > subagent shipped in that repo's `.claude/agents/`, read-only, one specific job. This lab flips

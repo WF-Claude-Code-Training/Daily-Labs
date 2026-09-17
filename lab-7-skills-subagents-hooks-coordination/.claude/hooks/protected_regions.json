@@ -1,0 +1,19 @@
+{
+  "protected_regions": [
+    {
+      "path": "fees.py",
+      "snippet": "DEFAULT_FEE_TIERS: tuple[FeeTier, ...] = (\n    FeeTier(upper_aum=1_000_000, rate_bps=100),\n    FeeTier(upper_aum=5_000_000, rate_bps=80),\n    FeeTier(upper_aum=None, rate_bps=60),\n)",
+      "reason": "fee-tier table (WM-101) is out of scope for the WM-109 logging rollout \u2014 only add logging, don't touch tier values."
+    },
+    {
+      "path": "reconcile.py",
+      "snippet": "DEFAULT_STRATEGIES: tuple[Strategy, ...] = (\n    Strategy(\"rounding_tolerance\", rounding_tolerance),\n    Strategy(\"settlement_date_offset\", settlement_date_offset),\n    Strategy(\"currency_conversion\", currency_conversion),\n)",
+      "reason": "reconciliation-strategy definitions are out of scope for the WM-109 logging rollout \u2014 only add logging, don't touch strategy order or logic."
+    },
+    {
+      "path": "drift.py",
+      "snippet": "    # Current implementation: alert immediately on ANY breach.\n    # TODO: Add hysteresis \u2014 only alert if breach lasts >= min_duration_minutes.\n    #       Brief spikes that self-correct should NOT fire alerts.\n    for reading in sorted_readings:\n        if abs(reading.drift_percent) > threshold_percent:",
+      "reason": "drift hysteresis logic (Lab 3's exercise) is out of scope for the WM-109 logging rollout \u2014 only add logging around the existing alert, don't change when it fires."
+    }
+  ]
+}

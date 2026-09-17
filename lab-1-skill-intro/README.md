@@ -9,6 +9,11 @@
 > ```
 > All commands below assume you're running them from this folder.
 
+> **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+> `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
+> proxy, confirm the current proxy environment variables or internal package index with your TA
+> before the session — don't spend lab time debugging network config.
+
 > **Core idea.** A code fix only works if the task frame is specific enough for an agent to act
 > safely and verify the result. This lab teaches that discipline with a real WM-101 advisory-fee
 > bug in a small, deterministic module.

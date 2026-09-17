@@ -9,13 +9,18 @@
 > ```
 > All commands below assume you're running them from this folder.
 
+> **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+> `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
+> proxy, confirm the current proxy environment variables or internal package index with your TA
+> before the session — don't spend lab time debugging network config.
+
 > **Recap.** In Lab 2 (an earlier lab in this course, not included in this package) you drove
 > Claude Code's built-in tools to explore and fix quarterly fees, then authored your own
 > team-reusable Skill to apply the same pattern fix to montly fees. This lab introduces **Plan
 > mode** and **test-driven delivery**: give Claude a verifiable target (failing tests), force
 > planning before execution, and implement only after reviewing the plan. Parts 1-5 hand you
 > that failing test already written; [Part 6](#part-6-extend--write-the-test-first-for-real-this-time)
-> takes the training wheels off and has you write the spec yourself.
+> (a stretch goal) takes the training wheels off and has you write the spec yourself.
 
 ---
 
@@ -44,8 +49,8 @@ before alerting). A brief spike doesn't fire; a sustained breach does.
 > mode below exists to propose a change against it, not against vibes.
 
 > **Once Parts 1-5 are green:** a follow-up ticket, WM-110b, is waiting in
-> [Part 6](#part-6-extend--write-the-test-first-for-real-this-time) — no tests provided this
-> time. You write them.
+> [Part 6](#part-6-extend--write-the-test-first-for-real-this-time) (stretch goal, time
+> permitting) — no tests provided this time. You write them.
 
 ---
 
@@ -88,10 +93,17 @@ Open Claude Code and enable **Plan mode** (the toggle in the panel, or type `/pl
 
 Give Claude the task as a proper frame that ensures that false positives in `drift.py` are fixed using hysteresis such that only alert if the breach lasts at least `min_duration_minutes`
 
-Review the plan Claude proposes. It should:
-1. Add a `min_duration_minutes` parameter to the alert function
-2. Track breach duration using the timestamps
-3. Only fire the alert if duration ≥ threshold
+**Plan-review checkpoint — read before you approve.** `check_drift_alert` already accepts a
+`min_duration_minutes` parameter (it defaults to `0`, which preserves today's alert-immediately
+behavior) — the gap is that the function body never uses it. If the plan Claude proposes
+includes a step like *"add a `min_duration_minutes` parameter to the function"*, that step is
+wrong: the parameter already exists. Don't approve a plan that proposes re-adding it — ask Claude
+to revise once it has actually read the current signature.
+
+A correct plan should instead:
+1. Track breach duration using the reading timestamps already available
+2. Only fire the alert once that duration reaches `min_duration_minutes`
+3. Leave the existing parameter and its default untouched
 
 If the plan looks reasonable, approve it. If not, ask for revisions.
 
@@ -155,6 +167,9 @@ so the spec-writing was done for you. Part 6 takes that scaffolding away.
 ---
 
 ## Part 6: Extend — write the test first, for real this time
+
+> **Stretch goal.** Parts 1–5 are the required lab. Only start Part 6 once those are green and
+> time allows — it is not required for completion.
 
 ### The follow-up ticket: WM-110b — Severe breaches shouldn't wait
 
