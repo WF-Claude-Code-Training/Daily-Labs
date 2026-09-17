@@ -9,6 +9,11 @@
 > ```
 > All commands below assume you're running them from this folder.
 
+> **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+> `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
+> proxy, confirm the current proxy environment variables or internal package index with your TA
+> before the session — don't spend lab time debugging network config.
+
 > **Recap.** Day 1 and the Day 2 morning (earlier labs in this course, not included in this
 > package) built and mapped this app's fee, reconciliation, and drift logic (Labs 1-4) and
 > introduced multi-agent orchestration and a project-scoped review subagent (Labs 4-5). None of
@@ -50,7 +55,11 @@ outcomes (an exact match, drift that stays within threshold) must NOT add noise 
 3. `check_drift_alert` (`drift.py`) logs `drift_alert_fired` (`portfolio_id`,
    `drift_percent`) whenever it returns an alert — but nothing when it returns `None`.
 4. The `logging-reviewer` subagent has reviewed all three changes and returned **APPROVED**.
-5. `test_logging.py` passes in full, and the full suite (`pytest`) has no regressions.
+5. A `PreToolUse` hook (`.claude/hooks/protected_regions.py`) is wired in `.claude/settings.json`
+   and blocks any edit that would remove or alter the fee-tier table, the reconciliation-strategy
+   definitions, or the drift hysteresis condition — confirmed by
+   `pytest test_protected_regions_hook.py -v`.
+6. `test_logging.py` passes in full, and the full suite (`pytest`) has no regressions.
 
 > **Verifiable target (Agentic Mindset — Verification ingredient):**
 > `test_logging.py` — seeded failing (the three modules don't call the logger yet). That
@@ -66,6 +75,7 @@ outcomes (an exact match, drift that stays within threshold) must NOT add noise 
 | `fees.py`, `drift.py`, `reconcile.py` — working domain logic carried forward from earlier labs | Add one `get_logger("...")` + the log calls named in Definition of done, above |
 | `.claude/skills/structured-logging-rollout/` — a **multi-file project Skill**: `SKILL.md` (workflow), `reference.md` (field-naming conventions + worked example, loaded on demand), `scripts/verify_structured_logs.py` (a deterministic checker run via Bash) | Use it — read `reference.md` once before writing your first log call |
 | `.claude/agents/logging-reviewer.md` — a pre-built, read-only review subagent the Skill delegates to | Nothing to build — just don't skip the delegation step |
+| `.claude/hooks/protected_regions.py` + `protected_regions.json`, wired in `.claude/settings.json` — a `PreToolUse` hook that enforces the fee-tier/strategy/hysteresis guardrails as denials, not prose | Nothing to build — confirm it blocks an out-of-scope edit, then continue with the in-scope logging change |
 | `test_logging.py` — the verifiable target, currently failing | Make it pass without changing what any of the three functions returns |
 
 ---
@@ -155,27 +165,51 @@ re-run the tests and ask for review again. Once it's **APPROVED**, move on to Pa
 
 ---
 
-## Part 4: Verify
+## Part 4: See the guardrail enforced by a hook, not just written down
+
+This lab's guardrails have always said "don't touch fee-tier, reconciliation-strategy, or
+hysteresis logic while threading logging through." A `PreToolUse` hook now enforces exactly
+that — it's already wired in `.claude/settings.json` and reads its rules from
+`.claude/hooks/protected_regions.json`. It intercepts every `Write`/`Edit`/`MultiEdit`, checks
+whether the change would remove or alter one of three protected snippets (the fee-tier table in
+`fees.py`, the `DEFAULT_STRATEGIES` tuple in `reconcile.py`, or the hysteresis condition in
+`drift.py`), and **blocks it outright** if so — Claude sees the denial reason and has to work
+around it, the same way `logging-reviewer` can't be talked out of a finding.
+
+Try it once, deliberately, before moving on: ask Claude to also "fix the hysteresis TODO while
+you're in `drift.py`" as an explicit off-scope request, and confirm the hook denies the edit with
+a clear reason. Then continue with only the in-scope `drift_alert_fired` log call. This is the
+same guardrail from Part 2's task frame — the hook is what makes it a control instead of a
+request.
+
+---
+
+## Part 5: Verify
 
 ```bash
 python3 .claude/skills/structured-logging-rollout/scripts/verify_structured_logs.py
+python3 -m pytest test_protected_regions_hook.py -v
 python3 -m pytest test_logging.py -v
 python3 -m pytest -v
 ```
 
-All three should be clean: the verification script reports `PASS` for `fees`, `reconcile`, and
-`drift`; `test_logging.py` passes in full; the full suite has no regressions.
+All four should be clean: the verification script reports `PASS` for `fees`, `reconcile`, and
+`drift`; the hook test suite passes in full; `test_logging.py` passes in full; the full suite has
+no regressions.
 
 ---
 
-## Part 5: Deliver
+## Part 6: Deliver
 
 Hand back:
 
 1. The three files changed, and the one log call (or two, for `reconcile.py`) added to each.
 2. The `logging-reviewer` verdict (APPROVED, plus anything it flagged and how you fixed it).
-3. Verification script output + test results (`test_logging.py`, full `pytest`).
-4. Any decision point you deliberately chose **not** to log (e.g. an exact `MATCHED` position,
+3. Confirmation that the `protected_regions.py` hook denied your deliberate off-scope test edit,
+   with the reason it returned.
+4. Verification script output + test results (`test_protected_regions_hook.py`, `test_logging.py`,
+   full `pytest`).
+5. Any decision point you deliberately chose **not** to log (e.g. an exact `MATCHED` position,
    a drift check that stays within threshold) and why — routine outcomes aren't audit events.
 
 ---
@@ -194,6 +228,9 @@ Hand back:
    on.
 5. `logging-reviewer` is read-only by design — if it flags something, fix the module yourself;
    don't loosen its checklist to make it stop complaining.
+6. The `protected_regions.py` hook is the enforcement layer for guardrail 2 above — if it
+   denies an edit, that's it working correctly; don't disable the hook or edit
+   `protected_regions.json` to loosen it just to get past a legitimate denial.
 
 ---
 

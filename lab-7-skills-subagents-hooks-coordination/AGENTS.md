@@ -40,6 +40,9 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
     `scripts/verify_structured_logs.py` (a deterministic Bash-run checker).
   - `.claude/agents/logging-reviewer.md` — a pre-built, read-only subagent. The Skill's Phase C
     delegates to it after implementing, before verification (see README.md Part 3).
+  - `.claude/hooks/protected_regions.py` + `protected_regions.json`, wired in `.claude/settings.json`
+    — a `PreToolUse` hook that denies any edit removing or altering the fee-tier table,
+    `DEFAULT_STRATEGIES`, or the drift hysteresis condition. See README.md Part 4.
 - **Verify with `pytest`, not by eye:**
   ```bash
   python3 -m pytest test_logging.py -v   # this lab's tests
@@ -56,6 +59,9 @@ Every non-trivial ask should read as an agentic task frame, not a bare prompt:
   - `logging-reviewer` is read-only by design (`tools: Read, Grep, Glob`, no `Edit`/`Bash`) — if
     it flags something, fix the module yourself; don't loosen the subagent's checklist to make
     it stop complaining.
+  - The `protected_regions.py` `PreToolUse` hook is the enforcement layer for the fee-tier/
+    strategy/hysteresis guardrail above — if it denies an edit, don't disable the hook or edit
+    `protected_regions.json` to get past it; fix the edit instead.
   - A passing test is necessary but not sufficient — `logging-reviewer`'s checklist catches
     convention drift (an invented field name, a routine path logged anyway) that a green test
     suite alone won't.

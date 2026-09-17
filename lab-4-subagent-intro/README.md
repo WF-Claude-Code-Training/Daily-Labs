@@ -9,6 +9,11 @@
 > ```
 > All commands below assume you're running them from this folder.
 
+> **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+> `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
+> proxy, confirm the current proxy environment variables or internal package index with your TA
+> before the session — don't spend lab time debugging network config.
+
 > **Recap.** In Lab 3 (an earlier lab in this course, not included in this package) you used
 > **Plan mode** and **test-driven delivery** to add hysteresis to a drift alert — a bounded,
 > one-shot fix reviewed before it ran. This lab keeps that same discipline for the fix itself,
