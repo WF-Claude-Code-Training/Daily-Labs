@@ -38,6 +38,8 @@ This lab is fee-domain only and stays inside this folder.
 
 ## Scenario
 
+**WM-202:** Fee logic rollout across billing cadences.
+
 You are rolling out consistent fee business logic across two methods:
 
 1. `quarterly_advisory_fee(...)`
