@@ -1,10 +1,9 @@
 # Day 1 · Lab 3 — Plan Mode & Test-Driven Delivery
 
 > **Standalone package.** This folder is a self-contained copy of Lab 3 from a larger Claude
-> Code training course — it needs no access to the rest of the course repo. Setup:
+> Code training course. Open this folder
+> directly as your VS Code / editor workspace root, then set up:
 > ```bash
-> cd lab3-standalone
-> python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 > pip install -r requirements.txt
 > ```
 > All commands below assume you're running them from this folder.
@@ -89,7 +88,7 @@ This is your **verifiable target**. Don't implement until you understand it.
 
 ## Part 2: Plan — use Plan mode before editing
 
-Open Claude Code and enable **Plan mode** (the toggle in the panel, or type `/plan`).
+Open Claude Code and enable **Plan mode** (the toggle in the panel).
 
 Give Claude the task as a proper frame that ensures that false positives in `drift.py` are fixed using hysteresis such that only alert if the breach lasts at least `min_duration_minutes`
 

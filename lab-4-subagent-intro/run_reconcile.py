@@ -3,7 +3,7 @@
 Standalone runner — this lab package has no CLI framework or shared app to hang this off of,
 just this one entry point over `reconcile.triage`.
 
-Usage (from the lab4-standalone folder root):
+Usage (from this folder's root, opened as the workspace root):
     python3 run_reconcile.py fixtures/book_positions.csv fixtures/custodian_file.csv
 """
 
