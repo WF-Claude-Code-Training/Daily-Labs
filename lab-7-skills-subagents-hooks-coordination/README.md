@@ -112,16 +112,23 @@ when you're about to write a log call (progressive disclosure keeps context chea
 `scripts/verify_structured_logs.py` checker the Skill runs via `Bash` — its logic never has to
 be read into the conversation, only its pass/fail output does.
 
-Ask for it explicitly — Skill selection isn't guaranteed to happen implicitly:
+Skill selection isn't guaranteed to happen implicitly. Before you type anything to Claude,
+write your own task frame covering all five ingredients:
 
-> *"Use skill `structured-logging-rollout`. Outcome: thread `agentic_framing.logging_utils`
-> through `fees.py`, `reconcile.py`, and `drift.py` per WM-109.
-> Scope: only those three files (plus the necessary import/module-level logger in each) —
-> don't change what any function returns or how it decides. Verification: delegate to the
-> `logging-reviewer` subagent, then run
-> `python3 .claude/skills/structured-logging-rollout/scripts/verify_structured_logs.py`, then
-> `pytest test_logging.py -v`, then full `pytest`. Guardrails: don't touch fee-tier,
-> reconciliation-strategy, or hysteresis logic — only add logging. Run Phase A only first."*
+- **Outcome** — use the skill to thread the shared logger through `fees.py`, `reconcile.py`, and `drift.py` per
+  WM-109, so each domain's audit-worthy moment gets a structured event.
+- **Scope** — only those three files (plus the import/module-level logger each one needs) —
+  nothing else changes.
+- **Verification** — the `logging-reviewer` subagent has to approve the diff, the Skill's own
+  checker script has to pass, the seeded logging test has to go green, and the full suite has
+  to still be clean — name that order, don't leave it implicit.
+- **Deliverable** — the three diffs, the reviewer's verdict, and which routine outcomes you
+  deliberately chose not to log.
+- **Guardrails** — the fee-tier table, the reconciliation strategies, and the drift hysteresis
+  condition are off-limits — logging only, no behavior changes.
+
+Ask for the Skill by name (`structured-logging-rollout`), and tell it to run Phase A only —
+don't let it run straight through to implementation before you've reviewed the plan.
 
 Review the plan, approve it, then let it proceed through Phase B (implement).
 
