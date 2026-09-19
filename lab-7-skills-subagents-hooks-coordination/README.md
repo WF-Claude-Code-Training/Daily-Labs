@@ -1,18 +1,20 @@
 # Day 2 · Lab 7 — Add Structured Logging
 
 > **Standalone package.** This folder is a self-contained copy of Lab 7 from a larger Claude
-> Code training course — it needs no access to the rest of the course repo. Setup:
+> Code training course. Open this folder
+> directly as your VS Code / editor workspace root, then set up:
 > ```bash
-> cd lab7-standalone
-> python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 > pip install -r requirements.txt
 > ```
 > All commands below assume you're running them from this folder.
 
 > **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
-> `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
+> `python` in every command below. If `pip install` fails behind corporate
 > proxy, confirm the current proxy environment variables or internal package index with your TA
-> before the session — don't spend lab time debugging network config.
+> before the session — don't spend lab time debugging network config. If `pip install` fails
+> with `error: externally-managed-environment` (PEP 668, common on Homebrew/Linux system
+> Python), rerun with `pip install --user -r requirements.txt` or
+> `pip install --break-system-packages -r requirements.txt`.
 
 > **Recap.** Day 1 and the Day 2 morning (earlier labs in this course, not included in this
 > package) built and mapped this app's fee, reconciliation, and drift logic (Labs 1-4) and

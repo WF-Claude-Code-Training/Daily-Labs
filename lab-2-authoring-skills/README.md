@@ -1,10 +1,9 @@
 # Day 1 · Lab 2 — Fee Logic Rollout with Two-Pass Skills
 
 > **Standalone package.** This folder is a self-contained copy of Lab 2 from a larger Claude
-> Code training course — it needs no access to the rest of the course repo. Setup:
+> Code training course. Open this folder
+> directly as your VS Code / editor workspace root, then set up:
 > ```bash
-> cd lab2-standalone
-> python3 -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 > pip install -r requirements.txt
 > ```
 > All commands below assume you're running them from this folder.
@@ -12,7 +11,10 @@
 > **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
 > `python` in every command below. If `pip install` fails behind the Wells Fargo corporate
 > proxy, confirm the current proxy environment variables or internal package index with your TA
-> before the session — don't spend lab time debugging network config.
+> before the session — don't spend lab time debugging network config. If `pip install` fails
+> with `error: externally-managed-environment` (PEP 668, common on Homebrew/Linux system
+> Python), rerun with `pip install --user -r requirements.txt` or
+> `pip install --break-system-packages -r requirements.txt`.
 
 > **Recap.** In Lab 1, you used a generic bounded Skill to fix one fee bug. This lab proves
 > when a generic flow is enough and when a domain-specific Skill is worth creating.
