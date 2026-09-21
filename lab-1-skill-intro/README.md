@@ -1,24 +1,24 @@
 # Day 1 · Lab 1 — Framing quality, using a Skill, and shipping a real fix
 
-> **Standalone package.** This folder is a self-contained copy of Lab 1 from a larger Claude
-> Code training course. Open this folder
-> directly as your VS Code / editor workspace root, then set up:
-> ```bash
-> pip install -r requirements.txt
-> ```
-> All commands below assume you're running them from this folder.
+**Standalone package.** This folder is a self-contained copy of Lab 1 from a larger Claude
+Code training course. Open this folder
+directly as your VS Code / editor workspace root, then set up:
+```bash
+pip install -r requirements.txt
+```
+All commands below assume you're running them from this folder.
 
-> **Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
-> `python` in every command below. If `pip install` fails behind corporate
-> proxy, confirm the current proxy environment variables or internal package index with your TA
-> before the session — don't spend lab time debugging network config. If `pip install` fails
-> with `error: externally-managed-environment` (PEP 668, common on Homebrew/Linux system
-> Python), rerun with `pip install --user -r requirements.txt` or
-> `pip install --break-system-packages -r requirements.txt`.
+**Environment notes.** If `python3` isn't on PATH (common on Windows), substitute `py -3` or
+`python` in every command below. If `pip install` fails behind corporate
+proxy, confirm the current proxy environment variables or internal package index with your TA
+before the session — don't spend lab time debugging network config. If `pip install` fails
+with `error: externally-managed-environment` (PEP 668, common on Homebrew/Linux system
+Python), rerun with `pip install --user -r requirements.txt` or
+`pip install --break-system-packages -r requirements.txt`.
 
-> **Core idea.** A code fix only works if the task frame is specific enough for an agent to act
-> safely and verify the result. This lab teaches that discipline with a real WM-101 advisory-fee
-> bug in a small, deterministic module.
+**Core idea.** A code fix only works if the task frame is specific enough for an agent to act
+safely and verify the result. This lab teaches that discipline with a real WM-101 advisory-fee
+bug in a small, deterministic module.
 
 ---
 
