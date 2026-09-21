@@ -15,6 +15,44 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 
+# ── Exercise ─────────────────────────────────────────────────────────────────
+TICKET_PROMPT = (
+    "WM-101: Write a function that recalculates the advisory fee when a household's "
+    "AUM crosses a tier breakpoint."
+)
+
+LOW_QUALITY_FRAME = (
+    "Fix WM-101 so fees are correct, scoped to the fee module, run tests, "
+    "share a summary, and do not break compatibility."
+)
+
+
+# Fill this in during the exercise and re-run.
+MY_FRAME = ""
+
+
+def main() -> int:
+    print(rule())
+    print("  LAB 1 DEMO — WM-101 tiered AUM breakpoint bug")
+    print(rule())
+    print(f"\n  Ticket prompt:\n    {TICKET_PROMPT}")
+    print(render_score(score_frame(TICKET_PROMPT), show_suggestions=False))
+
+    print("\n  Low Quality frame: (all five ingredients, but still weak):")
+    print(f"    {LOW_QUALITY_FRAME}")
+    print(render_score(score_frame(LOW_QUALITY_FRAME), show_suggestions=False))
+
+    if MY_FRAME.strip():
+        print("\n  Your frame:")
+        print(f"    {MY_FRAME.strip()}")
+        print(render_score(score_frame(MY_FRAME.strip())))
+    else:
+        print("\n  (No `MY_FRAME` yet — add one above and re-run.)")
+
+    print("\nDone. Iterate your frame until quality and tests both pass.")
+    return 0
+
+
 # ── The five ingredients of an agentic task frame ────────────────────────────
 class Ingredient(str, Enum):
     """The five ingredients of an agentic task frame."""
@@ -282,43 +320,6 @@ def render_score(score: FrameScore, *, show_suggestions: bool = True) -> str:
     return "\n".join(lines)
 
 
-# ── Exercise ─────────────────────────────────────────────────────────────────
-TICKET_PROMPT = (
-    "WM-101: Write a function that recalculates the advisory fee when a household's "
-    "AUM crosses a tier breakpoint."
-)
-
-LOW_QUALITY_FRAME = (
-    "Fix WM-101 so fees are correct, scoped to the fee module, run tests, "
-    "share a summary, and do not break compatibility."
-)
-
-
-# Fill this in during the exercise and re-run.
-MY_FRAME = ""
-
-
-def main() -> int:
-    print(rule())
-    print("  LAB 1 DEMO — WM-101 tiered AUM breakpoint bug")
-    print(rule())
-    print(f"\n  Ticket prompt:\n    {TICKET_PROMPT}")
-    print(render_score(score_frame(TICKET_PROMPT), show_suggestions=False))
-
-    print("\n  Low Quality frame: (all five ingredients, but still weak):")
-    print(f"    {LOW_QUALITY_FRAME}")
-    print(render_score(score_frame(LOW_QUALITY_FRAME), show_suggestions=False))
-
-    if MY_FRAME.strip():
-        print("\n  Your frame:")
-        print(f"    {MY_FRAME.strip()}")
-        print(render_score(score_frame(MY_FRAME.strip())))
-    else:
-        print("\n  (No `MY_FRAME` yet — add one above and re-run.)")
-
-    print("\nDone. Iterate your frame until quality and tests both pass.")
-    return 0
-
-
 if __name__ == "__main__":
     raise SystemExit(main())
+
