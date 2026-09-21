@@ -139,7 +139,8 @@ Hand back:
 
 ## Optional stretch
 
-Turn on `USE_CLAUDE = True` in `convert_your_prompts.py` and compare your frame with a model draft.
-Keep yours unless the draft is measurably better.
+Have Claude Code draft its own frame for WM-101, then paste it into `MY_FRAME` and re-run
+`convert_your_prompts.py` to score it against yours. Keep yours unless the draft is measurably
+better.
 
 The model output is never ground truth.

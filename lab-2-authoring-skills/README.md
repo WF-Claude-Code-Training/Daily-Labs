@@ -155,15 +155,3 @@ Submit these items in order:
 5. Comparison:
   - what the specialized fee Skill added beyond `scoped-bugfix-flow`
   - what parts are stable enough to automate next
-
----
-
-## Optional context exercise (not primary)
-
-If time allows, run the backlog audit command to inspect framing quality:
-
-```bash
-python -m agentic_framing audit backlog/
-```
-
-Treat it as triage signal only, not a second implementation project.
