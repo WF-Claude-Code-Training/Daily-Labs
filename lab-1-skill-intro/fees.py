@@ -39,22 +39,8 @@ def annual_advisory_fee(aum: int, tiers: tuple[FeeTier, ...] = DEFAULT_FEE_TIERS
     if aum < 0:
         raise ValueError("AUM cannot be negative")
 
-    total_fee = 0.0
-    previous_upper = 0
-
     for tier in tiers:
-        if tier.upper_aum is None:
-            applicable_amount = max(aum - previous_upper, 0)
-            total_fee += applicable_amount * (tier.rate_bps / 10_000)
-            return round(total_fee, 2)
-
-        if aum <= tier.upper_aum:
-            applicable_amount = aum - previous_upper
-            total_fee += applicable_amount * (tier.rate_bps / 10_000)
-            return round(total_fee, 2)
-
-        applicable_amount = tier.upper_aum - previous_upper
-        total_fee += applicable_amount * (tier.rate_bps / 10_000)
-        previous_upper = tier.upper_aum
+        if tier.upper_aum is None or aum <= tier.upper_aum:
+            return round(aum * (tier.rate_bps / 10_000), 2)
 
     raise ValueError("AUM exceeds all configured fee tiers")
