@@ -133,25 +133,4 @@ python3 -m pytest test_fee_rollout.py -v
 
 ---
 
-## Deliverable format
 
-Submit these items in order:
-
-1. Skill artifacts:
-  - generic Skill used in Pass 1
-  - your specialized Skill from Pass 2
-2. Scope confirmation:
-  - files changed
-  - out-of-scope files left untouched
-3. Diff summary:
-  - what changed for quarterly
-  - what changed for monthly
-4. Test evidence:
-  - baseline failing state
-  - Pass 1 focused results (`-k quarterly`)
-  - Pass 2 focused results (`-k monthly`)
-  - final `test_fee_rollout.py` result
-  - final full `pytest` result
-5. Comparison:
-  - what the specialized fee Skill added beyond `scoped-bugfix-flow`
-  - what parts are stable enough to automate next
