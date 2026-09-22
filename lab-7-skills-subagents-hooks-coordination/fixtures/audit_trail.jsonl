@@ -1,0 +1,15 @@
+{"timestamp": "2026-07-24T02:00:01", "level": "INFO", "logger": "agentic_framing.fees", "event": "fee_calculated", "aum": 1200000, "fee": 11600.0}
+{"timestamp": "2026-07-24T02:00:02", "level": "INFO", "logger": "agentic_framing.fees", "event": "fee_calculated", "aum": 450000, "fee": 4500.0}
+{"timestamp": "2026-07-24T02:00:03", "level": "INFO", "logger": "agentic_framing.fees", "event": "fee_calculated", "aum": 7500000, "fee": 56000.0}
+
+-- log rotated 2026-07-24T02:00:30 --
+{"timestamp": "2026-07-24T02:01:00", "level": "INFO", "logger": "agentic_framing.reconcile", "event": "position_resolved", "symbol": "KO", "strategy": "rounding_tolerance"}
+{"timestamp": "2026-07-24T02:01:01", "level": "INFO", "logger": "agentic_framing.reconcile", "event": "position_resolved", "symbol": "MSFT", "strategy": "settlement_date_offset"}
+{"timestamp": "2026-07-24T02:01:02", "level": "INFO", "logger": "agentic_framing.reconcile", "event": "position_resolved", "symbol": "SAP", "strategy": "currency_conversion"}
+{"timestamp": "2026-07-24T02:02:00", "level": "WARNING", "logger": "agentic_framing.reconcile", "event": "position_escalated", "symbol": "GOOG", "risk_level": "MEDIUM", "reason": "difference not explained by any known strategy"}
+{"timestamp": "2026-07-24T02:02:01", "level": "WARNING", "logger": "agentic_framing.reconcile", "event": "position_escalated", "symbol": "NVDA", "risk_level": "MEDIUM", "reason": "missing from the custodian file"}
+{"timestamp": "2026-07-24T02:02:02", "level": "WARNING", "logger": "agentic_framing.reconcile", "event": "position_escalated", "symbol": "TSLA", "risk_level": "HIGH", "reason": "notional $2,500,010 exceeds the auto-resolve threshold"}
+{"timestamp": "2026-07-24T02:02:03", "level": "WARNING", "logger": "agentic_framing.reconcile", "event": "position_escalated", "symbol": "ORCL", "risk_level": "MEDIUM", "reason": "difference not explained by any known strategy"}
+{not valid json at all
+{"timestamp": "2026-07-24T02:03:00", "level": "WARNING", "logger": "agentic_framing.drift", "event": "drift_alert_fired", "portfolio_id": "P-001", "drift_percent": 6.5}
+{"timestamp": "2026-07-24T02:04:00", "level": "WARNING", "logger": "agentic_framing.drift", "event": "drift_alert_fired", "portfolio_id": "P-114", "drift_percent": 8.2}

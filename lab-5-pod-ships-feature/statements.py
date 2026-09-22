@@ -1,4 +1,4 @@
-"""Client statement generation — the top of this package's call graph."""
+"""Client statement generation: the top of this package's call graph."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from rebalance import compute_trades
 def build_statement(portfolio: list[dict], profile: dict[str, float]) -> str:
     """A plain-text client statement: fee, recommended trades, and any drift alerts.
 
-    Never mentions pricing at all in its own body — but nothing in it is safe from a
+    Never mentions pricing at all in its own body. But nothing in it is safe from a
     `get_price` change: every value it prints traces back through `advisory_fee`,
     `compute_trades`, or `check_drift`.
     """

@@ -13,5 +13,5 @@ def current_weights(portfolio: list[dict]) -> dict[str, float]:
 
 
 def target_weights(profile: dict[str, float]) -> dict[str, float]:
-    """The household's target allocation — a static profile, no pricing involved at all."""
+    """The household's target allocation: a static profile, no pricing involved at all."""
     return dict(profile)

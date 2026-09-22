@@ -1,0 +1,10 @@
+{
+  "_comment": "End-of-day marks, maintained by the pricing team (WM-114). The most recent date in each series is 'today' for this package, and must agree with the current-price table in pricing.py. That agreement is what keeps every existing caller's behavior unchanged.",
+  "as_of_today": "2026-07-24",
+  "series": {
+    "AAPL": {"2026-03-31": 128.00, "2026-06-30": 142.50, "2026-07-24": 150.00},
+    "MSFT": {"2026-03-31": 265.50, "2026-06-30": 288.00, "2026-07-24": 300.00},
+    "KO":   {"2026-03-31": 58.00,  "2026-06-30": 60.25,  "2026-07-24": 62.00},
+    "SAP":  {"2026-03-31": 94.75,  "2026-06-30": 101.00, "2026-07-24": 108.00}
+  }
+}

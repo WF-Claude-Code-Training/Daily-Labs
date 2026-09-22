@@ -1,13 +1,13 @@
-"""Structured logging — shared infrastructure for this lab (WM-109).
+"""Structured logging: shared infrastructure for this lab (WM-109).
 
 This module gives every domain module in this package one small, consistent way to emit an
 **audit trail**: instead of ad hoc `print()`/string-interpolated log lines, call sites log an
-`event` name plus structured keyword fields, and get back a JSON line — parseable by log
+`event` name plus structured keyword fields, and get back a JSON line, parseable by log
 tooling, greppable, and (for this course) capturable deterministically in tests with
 `capture_log_events`.
 
-This lab threads it through `fees.py`, `reconcile.py`, and `drift.py` — three modules carried
-forward from earlier labs in the full course — which is why this lives here rather than inside
+This lab threads it through `fees.py`, `reconcile.py`, and `drift.py`, three modules carried
+forward from earlier labs in the full course, which is why this lives here rather than inside
 a single lab's exercise folder: it's infrastructure the whole package shares, not one module's
 exercise code.
 """
@@ -44,8 +44,8 @@ class StructuredLogger:
     """Thin wrapper over stdlib `logging` that emits structured fields, not free-form strings.
 
     Every call site names an `event` plus whatever domain fields matter (e.g.
-    `aum=`, `symbol=`, `portfolio_id=`) instead of interpolating them into a message string —
-    that's what keeps the output machine-parseable and the audit trail queryable.
+    `aum=`, `symbol=`, `portfolio_id=`) instead of interpolating them into a message string.
+    That's what keeps the output machine-parseable and the audit trail queryable.
     """
 
     def __init__(self, name: str) -> None:
@@ -84,7 +84,7 @@ def get_logger(name: str) -> StructuredLogger:
     """Return a `StructuredLogger` scoped under the shared `agentic_framing` namespace.
 
     `name` should be the domain the call site belongs to, e.g. `get_logger("fees")`,
-    `get_logger("reconcile")`, `get_logger("drift")` — this becomes part of the logger's
+    `get_logger("reconcile")`, `get_logger("drift")`, this becomes part of the logger's
     dotted name (`agentic_framing.fees`, ...), so output can be filtered per domain.
     """
     _ensure_configured()
@@ -96,7 +96,7 @@ def capture_log_events(domain: str) -> Iterator[list[dict[str, Any]]]:
     """Test helper: capture the structured `fields` dicts logged under `domain` in this block.
 
     Yields a list that fills in place as events are logged, so a test can call the code under
-    test inside the `with` block and assert on the list afterward — deterministic, no need to
+    test inside the `with` block and assert on the list afterward, deterministic, no need to
     parse stdout.
 
     Example:

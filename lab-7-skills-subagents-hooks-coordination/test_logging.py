@@ -1,14 +1,14 @@
-"""Tests for WM-109 structured logging — the verifiable target for this lab.
+"""Tests for WM-109 structured logging, the verifiable target for this lab.
 
-`fees.py`, `reconcile.py`, and `drift.py` don't call the shared structured logger yet — that's
+`fees.py`, `reconcile.py`, and `drift.py` don't call the shared structured logger yet. That's
 the exercise. These tests are seeded to fail until the fix threads `agentic_framing.logging_utils`
 through all three, per `README.md`.
 
 Each test asserts on the *shape* of the emitted event (event name + the fields an auditor would
 need), not on domain values earlier labs are responsible for getting right (e.g. the exact fee
-amount, or whether hysteresis is implemented) — so this suite stays a clean signal for the
+amount, or whether hysteresis is implemented), so this suite stays a clean signal for the
 logging work specifically. `stock_split_adjustment` in `reconcile.py` is still stubbed and
-`drift.py`'s hysteresis TODO is still open, on purpose — neither one blocks this lab.
+`drift.py`'s hysteresis TODO is still open, on purpose. Neither one blocks this lab.
 """
 
 from datetime import datetime, timedelta
@@ -77,7 +77,7 @@ def test_reconcile_does_not_log_for_exact_matches():
     with capture_log_events("reconcile") as events:
         reconcile_positions(book, custodian)
 
-    assert events == [], "exact matches are routine — no audit-worthy event to log"
+    assert events == [], "exact matches are routine: no audit-worthy event to log"
 
 
 # ── Drift alerts ─────────────────────────────────────────────────────────────

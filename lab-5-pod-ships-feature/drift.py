@@ -10,7 +10,7 @@ DRIFT_ALERT_THRESHOLD = 0.05
 def check_drift(portfolio: list[dict], profile: dict[str, float]) -> list[str]:
     """Symbols whose current weight has drifted from target by more than the threshold.
 
-    Never calls `get_price` itself — but depends on it indirectly through `current_weights`.
+    Never calls `get_price` itself, but depends on it indirectly through `current_weights`.
     """
     current = current_weights(portfolio)
     target = target_weights(profile)
