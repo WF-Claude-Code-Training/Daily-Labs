@@ -3,7 +3,7 @@
 Exercises `.claude/hooks/protected_regions.py` directly by feeding it the same JSON on stdin
 Claude Code sends for a PreToolUse event, and asserting on its exit code. Exit code 2 means
 "blocked" (Claude Code feeds stderr back to the model as the reason); exit code 0 means
-"allowed". These tests never touch the real fees.py/reconcile.py/drift.py on disk — the hook
+"allowed". These tests never touch the real fees.py/reconcile.py/drift.py on disk. The hook
 runs against copies in tmp_path so a failing assertion can't corrupt this lab's files.
 """
 
@@ -107,11 +107,11 @@ def test_allows_logging_call_inserted_next_to_protected_drift_condition(tmp_path
         "tool_input": {
             "file_path": str(target),
             "old_string": (
-                "            # Alert immediately — ignores min_duration_minutes\n"
+                "            # Alert immediately: ignores min_duration_minutes\n"
                 "            return DriftAlert("
             ),
             "new_string": (
-                "            # Alert immediately — ignores min_duration_minutes\n"
+                "            # Alert immediately: ignores min_duration_minutes\n"
                 "            logger.info(\"drift_alert_fired\", portfolio_id=portfolio_id, "
                 "drift_percent=reading.drift_percent)\n"
                 "            return DriftAlert("

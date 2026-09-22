@@ -6,7 +6,7 @@ This module detects when drift exceeds a threshold and fires an alert.
 Lab 3 (an earlier lab in this course, not included in this package) adds **hysteresis** to
 reduce false positives: a brief spike that self-corrects should not fire an alert. Only
 sustained breaches (lasting >= min_duration_minutes) should alert. This lab's logging work does
-not depend on whether that fix has been applied — see `test_logging.py`'s docstring.
+not depend on whether that fix has been applied: see `test_logging.py`'s docstring.
 """
 
 from __future__ import annotations
@@ -63,11 +63,11 @@ def check_drift_alert(
     sorted_readings = sorted(readings, key=lambda r: r.timestamp)
 
     # Current implementation: alert immediately on ANY breach.
-    # TODO: Add hysteresis — only alert if breach lasts >= min_duration_minutes.
+    # TODO: Add hysteresis: only alert if breach lasts >= min_duration_minutes.
     #       Brief spikes that self-correct should NOT fire alerts.
     for reading in sorted_readings:
         if abs(reading.drift_percent) > threshold_percent:
-            # Alert immediately — ignores min_duration_minutes
+            # Alert immediately: ignores min_duration_minutes
             return DriftAlert(
                 portfolio_id=portfolio_id,
                 drift_percent=reading.drift_percent,

@@ -1,4 +1,5 @@
 {
+  "_comment": "One hook is wired: no_print.py, the worked example you read in Part 2. The second one — protected_regions.py — is yours to write and wire here, following the same shape. See README.md Part 2 and test_protected_regions_hook.py.",
   "hooks": {
     "PreToolUse": [
       {
@@ -6,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 .claude/hooks/protected_regions.py"
+            "command": "python3 .claude/hooks/no_print.py"
           }
         ]
       }

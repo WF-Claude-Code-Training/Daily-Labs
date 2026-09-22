@@ -1,7 +1,7 @@
 """Reconciliation triage for portfolio positions (WM-106).
 
 A nightly reconciliation compares our internal *book* of positions against the *custodian
-file*. The naive ask (WM-106) is "compare them and print the mismatches" — but taken literally
+file*. The naive ask (WM-106) is "compare them and print the mismatches", but taken literally
 that dumps every discrepancy on an advisor, most of which are explainable noise. Positions
 disagree for two very different reasons:
 
@@ -9,17 +9,17 @@ disagree for two very different reasons:
   rounding tolerance, a settlement date off by the usual one-day offset, a price expressed in a
   different currency.
 - **Genuine breaks** no strategy explains: a real quantity gap, or a position missing on one
-  side entirely — these must be **escalated** to a human, never guessed at or silently dropped.
+  side entirely. These must be **escalated** to a human, never guessed at or silently dropped.
 
 `reconcile_positions` is the core of this: for each position it works through the known
-strategies in order — Read the two sides, Decide which strategy to try, Act (apply it), Observe
-whether it explains the difference — and returns a per-position verdict of `MATCHED`,
+strategies in order: Read the two sides, Decide which strategy to try, Act (apply it), Observe
+whether it explains the difference, and returns a per-position verdict of `MATCHED`,
 `RESOLVED` (with the strategy that explained it), or `ESCALATED` (with the strategies it tried
 and a risk level). A **dollar-risk threshold** overrides everything: a position whose notional
 exposure is large escalates for human review *even if* a strategy appears to explain it, because
 a big number is not something you auto-resolve on a pattern match.
 
-Everything here is deterministic and offline — no API key, no network call, nothing to mock.
+Everything here is deterministic and offline: no API key, no network call, nothing to mock.
 """
 
 from __future__ import annotations
@@ -36,7 +36,7 @@ SETTLEMENT_OFFSET_DAYS = 1
 # Known FX rates (custodian price / book price) the currency strategy will accept.
 KNOWN_FX_RATES = (1.08, 1.27, 0.79, 0.92)
 FX_TOLERANCE = 0.01
-# Known forward stock-split ratios (custodian qty / book qty) — Lab 4's exercise strategy.
+# Known forward stock-split ratios (custodian qty / book qty), Lab 4's exercise strategy.
 KNOWN_SPLIT_RATIOS = (2, 3, 4)
 # Relative tolerance on notional value (qty * price) across a split.
 SPLIT_NOTIONAL_TOLERANCE = 0.01
@@ -166,14 +166,14 @@ def currency_conversion(book: Position, custodian: Position) -> bool:
 
 
 def stock_split_adjustment(book: Position, custodian: Position) -> bool:
-    """LAB 4 EXERCISE — not yet implemented (an earlier lab in this course, not included here).
+    """LAB 4 EXERCISE: not yet implemented (an earlier lab in this course, not included here).
 
     Should explain a qty/price difference caused by a known forward stock split (custodian
     qty = book qty * ratio, custodian price = book price / ratio) where notional value
     (qty * price) is unchanged within `SPLIT_NOTIONAL_TOLERANCE`, for a known `ratio` in
     `KNOWN_SPLIT_RATIOS`, with settle_date agreeing on both sides.
     """
-    return False  # not this lab's exercise — left stubbed, see test_logging.py's docstring
+    return False  # not this lab's exercise, left stubbed, see test_logging.py's docstring
 
 
 @dataclass(frozen=True)
@@ -212,10 +212,10 @@ def reconcile_positions(
       - identical on both sides                         -> MATCHED
       - a strategy explains the difference, risk small  -> RESOLVED (strategy recorded)
       - notional exposure >= dollar_threshold           -> ESCALATED (HIGH), even if a strategy
-        would have explained it — a big number is never auto-resolved on a pattern match
+        would have explained it. A big number is never auto-resolved on a pattern match
       - no strategy explains it, or a side is missing   -> ESCALATED (strategies tried recorded)
 
-    Every input symbol appears in exactly one verdict — nothing is silently dropped.
+    Every input symbol appears in exactly one verdict. Nothing is silently dropped.
     """
     book_by_symbol = {p["symbol"]: p for p in book}
     cust_by_symbol = {p["symbol"]: p for p in custodian}
@@ -227,17 +227,17 @@ def reconcile_positions(
         risk = dollar_risk(b, c)
         risk_level = HIGH if risk >= dollar_threshold else MEDIUM
 
-        # Missing on one side — a genuine break, escalate with no strategy attempted.
+        # Missing on one side: a genuine break, escalate with no strategy attempted.
         if b is None or c is None:
             where = "custodian file" if b is None else "book"
             results.append(ReconResult(
                 symbol=symbol, status=ESCALATED, risk_level=risk_level,
                 attempted_strategies=[],
-                detail=f"{symbol} missing from the {where} — position exists on one side only",
+                detail=f"{symbol} missing from the {where}: position exists on one side only",
             ))
             continue
 
-        # Identical on every shared field — nothing to do.
+        # Identical on every shared field: nothing to do.
         if _positions_equal(b, c):
             results.append(ReconResult(symbol=symbol, status=MATCHED))
             continue
@@ -257,7 +257,7 @@ def reconcile_positions(
                 symbol=symbol, status=ESCALATED, risk_level=HIGH,
                 attempted_strategies=attempted,
                 detail=(f"{symbol} notional ${risk:,.0f} exceeds the "
-                        f"${dollar_threshold:,.0f} auto-resolve threshold — human review required"),
+                        f"${dollar_threshold:,.0f} auto-resolve threshold, human review required"),
             ))
         elif explained_by is not None:
             results.append(ReconResult(
@@ -287,7 +287,7 @@ def _file_result(result: TriageResult, r: ReconResult) -> None:
     else:
         result.escalated.append(r)
         result.actions.append(
-            f"{r.symbol}: ESCALATED ({r.risk_level}) — "
+            f"{r.symbol}: ESCALATED ({r.risk_level}): "
             f"tried [{', '.join(r.attempted_strategies) or 'none'}]"
         )
 

@@ -1,6 +1,6 @@
 """Deterministic checker for the WM-114 change-impact note (Lab 5's verifiable target).
 
-Not a test suite — there's no code to change in this lab, just a note to write. This checks
+Not a test suite. There's no code to change in this lab, just a note to write. This checks
 that the note names every function actually affected if `get_price`'s signature changes, so
 "I read the code" turns into something checkable instead of a vibe.
 
@@ -22,7 +22,7 @@ DIRECT_CALLERS = [
 ]
 
 # Functions that don't call get_price directly but depend on it transitively through a direct
-# caller above — easy to miss if you stop at a grep for "get_price(".
+# caller above, easy to miss if you stop at a grep for "get_price(".
 TRANSITIVE_CALLERS = [
     ("check_drift", "drift.py"),           # via current_weights
     ("build_statement", "statements.py"),  # via advisory_fee, compute_trades, check_drift

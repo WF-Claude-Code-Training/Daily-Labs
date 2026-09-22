@@ -2,13 +2,13 @@
 
 `get_price` is the function WM-114 proposes changing: adding an `as_of_date` parameter so
 statements can be backdated to a historical price. Everything else in this package exists so
-that change has a real blast radius to trace — this file is deliberately the smallest, most
+that change has a real blast radius to trace. This file is deliberately the smallest, most
 innocuous-looking one, which is exactly the point.
 """
 
 from __future__ import annotations
 
-# A tiny in-memory price table — this lab is about tracing dependencies, not real market data.
+# A tiny in-memory price table. This lab is about tracing dependencies, not real market data.
 _PRICES = {
     "AAPL": 150.00,
     "MSFT": 300.00,
