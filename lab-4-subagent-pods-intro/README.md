@@ -112,11 +112,10 @@ be able to explain. Read the test and the stub's docstring first.
 
 ### Step 1: `implementer` writes the fix
 
-> *"Have the implementer subagent make `test_stock_split_auto_resolves` pass. The stub is
-> `stock_split_adjustment` in `reconcile.py`; its docstring has the rule. Follow the pattern of
-> the three working strategies. Acceptance criteria: the test passes, no other test regresses,
-> and no split ratio outside `KNOWN_SPLIT_RATIOS` is ever accepted. Then add the strategy to
-> `DEFAULT_STRATEGIES`."*
+Delegate this to the `implementer` subagent in your own words. Tell it what's broken and where
+it lives (you already have both from the bug description above), and give it acceptance
+criteria of your own rather than "make the test pass": what has to keep working, what must
+never happen, and what "done" includes beyond the target test turning green.
 
 Read its report, especially the "what I deliberately did not change" section. Then:
 
@@ -151,11 +150,10 @@ Green except the two suites you haven't started.
 
 ### Step 3: `contract-reviewer` reviews it
 
-> *"Have the contract-reviewer subagent review the `stock_split_adjustment` implementation and
-> the `DEFAULT_STRATEGIES` change against these criteria: the strategy never accepts a ratio
-> outside `KNOWN_SPLIT_RATIOS`; it verifies notional value (`qty * price`) is unchanged within
-> `SPLIT_NOTIONAL_TOLERANCE` rather than checking qty or price alone; it follows the existing
-> strategy pattern; nothing outside the new function and its `DEFAULT_STRATEGIES` entry changed."*
+Hand the diff to `contract-reviewer` yourself, with the criteria the fix actually needs to meet.
+You have everything you need to write those criteria: the stub's docstring, the acceptance
+criteria you gave `implementer` in Step 1, and the pattern the other strategies already follow.
+Don't let the reviewer's checklist be vaguer than the one you handed the implementer.
 
 Read the verdict. If it comes back **CHANGES NEEDED**, route the fix back to `implementer`. The
 reviewer cannot patch anything, by design. Then re-run and re-review.
@@ -227,26 +225,7 @@ Two things that are where teams lose the most time:
   data must keep today's exact behavior. Widening a default is how you silently change every
   existing caller.
 
-### The payoff: run it (and verify both paths)
-
-**Part of WM-115 verification:** Both commands below are required acceptance tests. The second
-command uses the `--reference-data` flag to load Ops-maintained split ratios. This flag is part
-of the verification process for agents completing Part 4.
-
-**Code changes required for `--reference-data` support:**
-
-`run_reconcile.py` must be updated to:
-1. Import `load_split_ratios` and `build_strategies` from `reconcile`
-2. Add an optional `--reference-data` argument to the argument parser
-3. When the flag is provided:
-   - Call `load_split_ratios(path)` to load ratios from the JSON file
-   - Call `build_strategies(split_ratios=...)` to construct the strategy tuple with loaded ratios
-   - Pass `strategies=...` to the `triage()` function
-4. When the flag is omitted:
-   - Call `triage()` with no `strategies` argument (uses default `DEFAULT_STRATEGIES`)
-5. Print a message indicating how many ratios were loaded and from where
-
-This ensures both the back-compat path (no flag) and the new Ops-enabled path (with flag) work correctly.
+### The payoff: run it
 
 **Without reference data** (back-compat, today's behavior):
 ```bash
@@ -260,13 +239,6 @@ python3 run_reconcile.py fixtures/book_positions.csv fixtures/custodian_file.csv
 ```
 → ORCL now resolves via `stock_split_adjustment` (4 resolved, 3 escalated). Ops added the `1.5`
 ratio to the JSON file, no code change needed.
-
-**Verification checklist for agents:**
-- [ ] Update `run_reconcile.py` to accept `--reference-data` flag
-- [ ] Run without `--reference-data` flag and verify ORCL escalates (back-compat path)
-- [ ] Run with `--reference-data reference_data/split_ratios.json` and verify ORCL resolves
-- [ ] Compare outputs: ORCL should move from ESCALATED → RESOLVED when reference data is loaded
-- [ ] Confirm both runs complete without errors
 
 **The moment of truth:** Compare the two outputs. ORCL moves from ESCALATED to RESOLVED. That's
 WM-115 working. Ops can change reference data without an engineer and without a release.
