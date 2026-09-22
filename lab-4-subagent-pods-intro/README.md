@@ -227,7 +227,26 @@ Two things that are where teams lose the most time:
   data must keep today's exact behavior. Widening a default is how you silently change every
   existing caller.
 
-### The payoff: run it
+### The payoff: run it (and verify both paths)
+
+**Part of WM-115 verification:** Both commands below are required acceptance tests. The second
+command uses the `--reference-data` flag to load Ops-maintained split ratios. This flag is part
+of the verification process for agents completing Part 4.
+
+**Code changes required for `--reference-data` support:**
+
+`run_reconcile.py` must be updated to:
+1. Import `load_split_ratios` and `build_strategies` from `reconcile`
+2. Add an optional `--reference-data` argument to the argument parser
+3. When the flag is provided:
+   - Call `load_split_ratios(path)` to load ratios from the JSON file
+   - Call `build_strategies(split_ratios=...)` to construct the strategy tuple with loaded ratios
+   - Pass `strategies=...` to the `triage()` function
+4. When the flag is omitted:
+   - Call `triage()` with no `strategies` argument (uses default `DEFAULT_STRATEGIES`)
+5. Print a message indicating how many ratios were loaded and from where
+
+This ensures both the back-compat path (no flag) and the new Ops-enabled path (with flag) work correctly.
 
 **Without reference data** (back-compat, today's behavior):
 ```bash
@@ -241,6 +260,13 @@ python3 run_reconcile.py fixtures/book_positions.csv fixtures/custodian_file.csv
 ```
 → ORCL now resolves via `stock_split_adjustment` (4 resolved, 3 escalated). Ops added the `1.5`
 ratio to the JSON file, no code change needed.
+
+**Verification checklist for agents:**
+- [ ] Update `run_reconcile.py` to accept `--reference-data` flag
+- [ ] Run without `--reference-data` flag and verify ORCL escalates (back-compat path)
+- [ ] Run with `--reference-data reference_data/split_ratios.json` and verify ORCL resolves
+- [ ] Compare outputs: ORCL should move from ESCALATED → RESOLVED when reference data is loaded
+- [ ] Confirm both runs complete without errors
 
 **The moment of truth:** Compare the two outputs. ORCL moves from ESCALATED to RESOLVED. That's
 WM-115 working. Ops can change reference data without an engineer and without a release.
