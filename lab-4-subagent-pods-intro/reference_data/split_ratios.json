@@ -1,0 +1,11 @@
+{
+  "_comment": "Corporate-action reference data, maintained by Ops (WM-115). Adding a ratio here is a data change, not a code change. That is the entire point of the ticket. The 1.5 entry is what lets ORCL's 3-for-2 split resolve.",
+  "updated": "2026-07-25",
+  "maintainer": "ops-reference-data",
+  "forward_split_ratios": [
+    {"ratio": 2.0, "label": "2-for-1", "source": "reference table"},
+    {"ratio": 3.0, "label": "3-for-1", "source": "reference table"},
+    {"ratio": 4.0, "label": "4-for-1", "source": "reference table"},
+    {"ratio": 1.5, "label": "3-for-2", "source": "ORCL press release 2026-07-24, loaded by Ops 2026-07-25"}
+  ]
+}

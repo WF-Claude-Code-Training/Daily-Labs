@@ -1,0 +1,11 @@
+{
+  "_comment": "Escalation risk policy, owned by Risk (WM-116). Tiers are evaluated in order; the first tier whose max_notional is >= the position's notional wins. auto_resolve_ceiling is the hard line above which nothing auto-resolves, regardless of strategy.",
+  "updated": "2026-07-25",
+  "maintainer": "wm-risk-policy",
+  "auto_resolve_ceiling": 1000000.0,
+  "tiers": [
+    {"max_notional": 50000.0, "level": "LOW"},
+    {"max_notional": 1000000.0, "level": "MEDIUM"},
+    {"max_notional": null, "level": "HIGH"}
+  ]
+}
