@@ -1,4 +1,4 @@
-"""Tests for WM-106 reconciliation triage — the verifiable target for Lab 4.
+"""Tests for WM-106 reconciliation triage, the verifiable target for Lab 4.
 
 Deterministic and offline: the whole suite runs with no API key and no network access.
 
@@ -46,7 +46,7 @@ def test_settlement_date_offset_auto_resolves():
 
 
 def test_unexplained_quantity_mismatch_escalates():
-    """No known strategy explains a raw quantity mismatch — must escalate, not guess."""
+    """No known strategy explains a raw quantity mismatch. Must escalate, not guess."""
     book = [{"symbol": "GOOG", "qty": 200, "price": 140.00}]
     custodian = [{"symbol": "GOOG", "qty": 150, "price": 140.00}]
     results = reconcile_positions(book, custodian)
@@ -56,7 +56,7 @@ def test_unexplained_quantity_mismatch_escalates():
 
 
 def test_high_dollar_mismatch_always_escalates_even_if_pattern_matches():
-    """Risk threshold overrides pattern-matching — large dollar amounts escalate regardless."""
+    """Risk threshold overrides pattern-matching. Large dollar amounts escalate regardless."""
     book = [{"symbol": "TSLA", "qty": 10000, "price": 250.001}]
     custodian = [{"symbol": "TSLA", "qty": 10000, "price": 250.00}]
     results = reconcile_positions(book, custodian)
@@ -74,14 +74,14 @@ def test_currency_conversion_auto_resolves():
     assert results[0].strategy == "currency_conversion"
 
 
-# ── LAB 4 EXERCISE — this is the verifiable target for Part 2 (currently failing) ──────────
+# ── LAB 4 EXERCISE: this is the verifiable target for Part 2 (currently failing) ──────────
 
 
 def test_stock_split_auto_resolves():
     """A 2-for-1 split: custodian qty doubles, price halves, notional unchanged.
 
     Fails until `stock_split_adjustment` in `reconcile.py` is implemented and added to
-    `DEFAULT_STRATEGIES` — see README.md Part 2.
+    `DEFAULT_STRATEGIES`: see README.md Part 2.
     """
     book = [{"symbol": "BRKB", "qty": 100, "price": 200.00, "settle_date": "2026-07-24"}]
     custodian = [{"symbol": "BRKB", "qty": 200, "price": 100.00, "settle_date": "2026-07-24"}]

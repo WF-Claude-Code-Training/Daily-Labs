@@ -1,6 +1,6 @@
 """Run the WM-106 reconciliation triage report from the command line.
 
-Standalone runner — this lab package has no CLI framework or shared app to hang this off of,
+Standalone runner: this lab package has no CLI framework or shared app to hang this off of,
 just this one entry point over `reconcile.triage`.
 
 Usage (from this folder's root, opened as the workspace root):
@@ -17,7 +17,7 @@ from reconcile import TriageResult, load_positions, triage
 def render_triage_report(report: TriageResult) -> str:
     """Render a TriageResult as MATCHED/RESOLVED/ESCALATED groups with an audit trail."""
     rule = "=" * 60
-    lines = [rule, "  Reconciliation triage — book vs custodian", rule]
+    lines = [rule, "  Reconciliation triage - book vs custodian", rule]
     if report.matched:
         lines.append(f"\nMATCHED ({len(report.matched)}):")
         lines += [f"  {r.symbol}" for r in report.matched]
