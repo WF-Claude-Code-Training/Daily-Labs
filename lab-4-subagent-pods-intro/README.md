@@ -133,9 +133,9 @@ test. That's its contract, and it's the whole reason the next step is a differen
 
 ### Step 2: `test-author` repairs the stale test
 
-> *"Have the test-author subagent repair `test_default_strategies_are_the_three_known_normalizations`
+> *Have the test-author subagent repair `test_default_strategies_are_the_three_known_normalizations`
 > in `test_reconcile.py`. A fourth strategy was added, so the test's name and its assertion are
-> both now untrue. Keep the coverage it was protecting. Don't delete it or make it vague."*
+> both now untrue.*
 
 ```bash
 python3 -m pytest -q
