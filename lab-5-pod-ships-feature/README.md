@@ -115,9 +115,9 @@ reviews both. This folder has no `.claude/agents/` yet, so create it before copy
 
 ```bash
 mkdir -p .claude/agents
-cp ../lab-4-subagent-pod-intro/.claude/agents/implementer.md .claude/agents/
-cp ../lab-4-subagent-pod-intro/.claude/agents/test-author.md .claude/agents/
-cp ../lab-4-subagent-pod-intro/.claude/agents/contract-reviewer.md .claude/agents/
+cp ../lab-4-subagent-pods-intro/.claude/agents/implementer.md .claude/agents/
+cp ../lab-4-subagent-pods-intro/.claude/agents/test-author.md .claude/agents/
+cp ../lab-4-subagent-pods-intro/.claude/agents/contract-reviewer.md .claude/agents/
 ```
 
 > **If this folder is genuinely isolated** (no `lab-4-subagent-pod-intro/` sibling, e.g. you were
