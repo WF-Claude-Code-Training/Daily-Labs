@@ -1,140 +1,87 @@
-# Day 3 capstone presentation guide for participants
+# Use Case Presentation Guide
 
-Your pod built its own greenfield use case under the same governed workflow practiced all
-week: plan mode, checkpoints, diff review, tests as a gate. **For compliance reasons, your
-presentation reports on your workflow, not your code or your use case's business content.**
-Report the KPI metrics you observed: how many Skills and subagents you used and the general
-benefit each gave you, what hooks/guardrails you configured, and your measured token cost per
-line of code. Back every number with evidence you can pull up live. This guide tells you what
-to prepare and how it's scored.
+## Structure: Bring Your Own Greenfield Project
 
-**Scored against:** [`capstone-presentation-rubric.md`](capstone-presentation-rubric.md) in
-this same folder. Read it before you prepare, not after. It is the whole rubric; nothing about
-scoring is held back from you.
+### Before the Session
 
-**If your presentation claims something your own git log, audit log, or code doesn't back up,
-that is the failure mode this rubric exists to catch. Bring the evidence; don't just describe
-it.**
+Each person should select a **greenfield project** from their own line of work. Choose something real enough that a plan, build, and test cycle makes sense, such as:
 
----
+- A script
+- A small tool
+- A workflow
+- A report generator
+- Another project that fits the person's role
 
-## 1. Format
+Keep the concept broad, but arrive with **two to three concrete components** already identified. Do not plan the entire project in advance.
 
-- **Confirm your exact slot length with your facilitator.** If this runs as a full capstone
-  slot, budget ~10 minutes presenting plus a few minutes of Q&A. If it runs as a shared
-  **lightning round** across several pods in one shorter block, use the compressed version in
-  §2 instead of trying to force the full structure into 2–3 minutes.
-- **One laptop, screen-shared, artifacts already open** in tabs before you start: your terminal
-  (for `git log --stat` and, if configured, your audit log tail) and your completed
-  token-usage-per-LOC table (§3 below). Keep Skill files, plan docs, and code diffs off screen.
-  The presentation reports counts and measured metrics, not the underlying artifacts.
-- **Every pod member should be ready to field a question.** Q&A (CP-10) is scored on whoever
-  answers, not just whoever is speaking when the question lands.
+### During Day 3
 
-## 2. Required structure (maps to the four rubric axes)
+Each person will work through the governed workflow and select **two to three components** to build during the session. Each component should map to a Skill or subagent use:
 
-| # | Section | Maps to | Full slot | Lightning round |
-|---|---|---|---|---|
-| 1 | Skills: how many you packaged or reused, and the general reuse benefit | CP-1, CP-2 | 2 min | 30 sec |
-| 2 | Orchestration: how many subagents you used and how each was verified | CP-3, CP-4, CP-5, CP-6 | 4 min | 1 min |
-| 3 | Context & token efficiency: your measured cost and what drove it | CP-7, CP-8, CP-9 | 2 min | 30 sec |
-| 4 | One safety-control decision (e.g. a hook or guardrail configured), described generically, plus Q&A | CP-10, CP-11, CP-12 | 2 min + Q&A | 1 min |
+- **Component A:** Something that reuses or creates a Skill, such as a formatting convention, domain checklist, or repeatable transformation.
+- **Component B:** Something delegated to a subagent, such as a research or lookup task, test-writing task, or review task. Verify the result through diff review before merging.
+- **Component C (optional):** A second subagent or Skill combination, or the safety-control component, such as a hook or guardrail configured for the project.
 
-If you're in a lightning round, don't try to cover everything. Pick your single strongest, most
-concrete piece of evidence per section (one subagent's verification result, one number from your
-token table, one instance where you rejected and reworked a subagent's output) rather than a
-shallow pass over all of it. A facilitator scoring a compressed slot will weight what you *do*
-show more heavily than what you skip.
+Run the same governed loop practiced on Days 1 and 2 for each component:
 
-### What "verified before trusted" looks like (for section 2)
+1. Enter **plan mode**.
+2. Reach a **checkpoint**.
+3. Perform a **diff review**.
+4. Run **tests as a gate**.
 
-For each subagent you used, be ready to name one concrete thing, not a feeling:
+This process creates the evidence trail, including Git log entries and audit log entries if configured, that each person will cite in their capstone report.
 
-- A test result: its test was red until you approved the change, then green.
-- A scope check: its change only touched the files it was scoped to, nothing else.
-- An independent review: a second agent (or the pod) independently checked its output against
-  its assigned scope before merging.
+### Track Evidence as You Go
 
-"I read the output and it looked right" is not a verifiable target. If that's genuinely all you
-have for a given subagent, say so. CP-5 specifically rewards pods that show an honest rework
-moment over pods that claim a flawless run with no evidence to back it. If you built solo with
-no subagents at all, say that plainly; you're scored 0 on the subagent-specific criteria, not
-penalized further for not fabricating an orchestration story.
+Record the following during the session, rather than reconstructing the numbers from memory afterward. Every number should be backed by evidence:
 
-## 3. The token-usage-per-LOC worksheet
+- **Skills used or created**, with a one-line benefit for each
+- **Subagents invoked**, including the verification step that confirmed each result was satisfactory
+- **Token usage per line of code produced**, surfaced by the tool or estimated from API or CLI usage logs
+- **The hook or guardrail configured**, including why it was selected
 
-CP-7/8/9 need a real, measured number, not an estimate presented as a measurement. Do this
-**before** presentation day, while your session history is still available.
+### After Training Ends
 
-### Step 1: Get token counts
+Each person's project continues with their own LoB team. The Day 3 session is the **seed and proof of concept**, not the finished product.
 
-Claude Code's session cost summary reports total input/output tokens for a session. **Confirm
-the exact command in your installed version before relying on it in front of the room.** As of
-this writing it is the `/cost` slash command inside an interactive session. If your version
-differs, ask your facilitator rather than guessing on stage.
+The two to three components built during the session become the reference pattern. This includes:
 
-Run it (or the equivalent for your version) once per subagent session, or once for the whole
-session if your subagents ran as sub-tasks within one session rather than separate sessions.
-Record whichever granularity your setup gives you. A breakdown by feature or subagent is worth
-more (CP-7's top band), but an honest aggregate number beats a fabricated breakdown.
+- Packaged Skills
+- Defined subagent roles
+- A configured guardrail
 
-**If no per-session token count is available in your setup:** fall back to an estimate and
-*label it as one*. A standard rough approximation: character count of the prompts and responses
-involved, divided by 4. A labeled estimate still earns partial credit under CP-7; an unlabeled
-guess presented as measured does not.
+The team can extend this pattern afterward.
 
-### Step 2: Get lines of code
+## Quick Preparation Checklist
 
-From your repo, after your first checkpoint:
+Each person should confirm that they have:
 
-```bash
-git diff --stat <first-checkpoint-sha>..HEAD -- '<your source file pattern>'
-```
+- [ ] Chosen a greenfield project scoped to two to three buildable components
+- [ ] Started a token-usage-per-LoC table to complete live, rather than estimating after the fact
+- [ ] Identified one hook or guardrail to describe generically, without project-specific business content
+- [ ] The individual ready to field questions and answers
 
-Count **net added lines** (insertions minus deletions) in production code. Decide up front
-whether test files count toward this denominator, and say which you chose when you present it.
-Either choice is defensible; an unstated choice isn't.
+## Schedule
 
-### Step 3: Build the table
+| Time | Block |
+| --- | --- |
+| 8:30 am to 12:30 pm ET | Build capstone (4 hours) |
+| 12:30 pm to 1:30 pm | Lunch |
+| 1:30 pm to 2:25 pm ET | Build capstone: final polish and evidence preparation |
+| 2:25 pm to 2:30 pm | Kickoff: confirm presenter list, format, and running order |
+| 2:30 pm to approximately 3:50 pm | Presentations for approximately nine participants |
+| 3:50 pm to 4:00 pm | Wrap-up and close |
 
-Adapt the rows to however you actually split the work, by feature, by subagent, or both:
+## Continue on Capstone and complete evidence preparation
 
-| Feature / subagent task | Tokens (in+out) | Net LOC added | Tokens / LOC |
-|---|---|---|---|
-| | | | |
-| | | | |
-| **Total** | | | |
+The final 55-minute build block, should be used to complete pending capstone work and then capture the token-usage-per-LOC table.
 
-### Step 4: Interpret it, don't just report it (CP-9)
+This preparation separates a presenter who can support their numbers live from one who is searching for them during the presentation.
 
-Before you present, agree as a pod on at least one comparison you can defend, e.g.:
+## Presentation Format
 
-- "The [harder feature] cost more per line than [the simpler one]. That's expected: it needed
-  more context about an edge case and produced a test alongside the code, not just a lookup."
-- "[Feature X] produced almost no code, only a decision doc. Its 'cost' is entirely
-  documentation. That's the point: it was a risk we chose to flag rather than build around."
+The presentation window is **80 minutes, from 2:30 pm to 3:50 pm**.
 
-A single aggregate "we used X tokens total" with no per-feature story is the bottom of CP-9's
-band, even if the number itself is accurate.
-
-## 4. Dos and don'ts
-
-**Do:**
-- Have your terminal open and ready to run `git log`, or tail your audit log if you configured
-  one. A question answered by pulling up the real file beats a remembered answer every time.
-- Say "we don't have that" if you don't have it. CP-10 rewards consistency with your own
-  artifact over confident improvisation.
-- Translate your workflow's shape (how many Skills/subagents, what guardrails) and one key
-  process decision into plain business language unprompted (CP-12), without detailing what the
-  build itself does.
-
-**Don't:**
-- Don't spend your limited time walking through what your app does, or any feature/business
-  specifics. Spend it on how you know each piece was verified before you trusted it.
-- Don't present a build with zero rejected subagent outputs as a point of pride. CP-5 asks for
-  the rework moment, not a flawless-run narrative.
-- Don't round or estimate your token/LOC numbers without saying so out loud. An unlabeled guess
-  is scored as if it were a fabricated number.
-- Don't let the presentation contradict your own git log or audit log. If you're unsure what
-  they show, check before you present. That's what the gate in
-  [`capstone-presentation-rubric.md`](capstone-presentation-rubric.md) exists to catch.
+| Format | Content | Questions and answers | Approximate total per person | Capacity in 80 minutes |
+| --- | ---: | ---: | ---: | ---: |
+| Full slot | 5 minutes | Approximately 3 minutes | Approximately 8 minutes | Approximately 9 people |
